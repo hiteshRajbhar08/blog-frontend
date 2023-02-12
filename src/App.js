@@ -7,6 +7,7 @@ import LoginPage from './pages/forms/LoginPage';
 import RegisterPage from './pages/forms/RegisterPage';
 import HomePage from './pages/home/HomePage';
 import PostPage from './pages/post/PostPage';
+import Toast from './utils/Toast';
 
 const App = () => {
   return (
@@ -21,6 +22,7 @@ const App = () => {
         <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
       </Routes>
       <Footer />
+      <Toast />
     </Router>
   );
 };
