@@ -65,6 +65,7 @@
   background-color: var(--white-color);
   color: var(--blue-color);
   border-radius: 10px;
+  border: 2px solid var(--dark-color);
   padding: 5px 10px;
   cursor: pointer;
 }
