@@ -1,4 +1,5 @@
 import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
 import CreatePostPage from './pages/createPost/CreatePostPage';
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/posts/create-post" element={<CreatePostPage />} />
         <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
       </Routes>
+      <Footer />
     </Router>
   );
 };
