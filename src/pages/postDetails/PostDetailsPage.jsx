@@ -6,9 +6,11 @@ import CommentList from '../../components/comments/CommentList';
 import { posts } from '../../dummyData';
 import './postDetails.css';
 import swal from 'sweetalert';
+import UpdatePostModal from './UpdatePostModal';
 
 const PostDetailsPage = () => {
   const [file, setFile] = useState(null);
+  const [updatePost, setUpdatePost] = useState(false);
 
   const { id } = useParams();
 
@@ -98,12 +100,18 @@ const PostDetailsPage = () => {
           <small>{post.likes.length} likes</small>
         </div>
         <div>
-          <i className="bi bi-pencil-square"></i>
+          <i
+            onClick={() => setUpdatePost(true)}
+            className="bi bi-pencil-square"
+          ></i>
           <i onClick={deletePostHandler} className="bi bi-trash-fill"></i>
         </div>
       </div>
       <AddComment />
       <CommentList />
+      {updatePost && (
+        <UpdatePostModal post={post} setUpdatePost={setUpdatePost} />
+      )}
     </section>
   );
 };
