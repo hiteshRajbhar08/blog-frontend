@@ -1,8 +1,11 @@
 import { useEffect, useState } from 'react';
 import { Link, useParams } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import AddComment from '../../components/comments/AddComment';
+import CommentList from '../../components/comments/CommentList';
 import { posts } from '../../dummyData';
 import './postDetails.css';
+import swal from 'sweetalert';
 
 const PostDetailsPage = () => {
   const [file, setFile] = useState(null);
@@ -20,6 +23,25 @@ const PostDetailsPage = () => {
     if (!file) return toast.warning('there is no file!');
 
     console.log('image uploaded successfully');
+  };
+
+  // Delete Post Handler
+  const deletePostHandler = () => {
+    swal({
+      title: 'Are you sure?',
+      text: 'Once deleted, you will not be able to recover this post!',
+      icon: 'warning',
+      buttons: true,
+      dangerMode: true,
+    }).then((willDelete) => {
+      if (willDelete) {
+        swal('post has been deleted!', {
+          icon: 'success',
+        });
+      } else {
+        swal('Something went wrong!');
+      }
+    });
   };
 
   return (
@@ -77,9 +99,11 @@ const PostDetailsPage = () => {
         </div>
         <div>
           <i className="bi bi-pencil-square"></i>
-          <i className="bi bi-trash-fill"></i>
+          <i onClick={deletePostHandler} className="bi bi-trash-fill"></i>
         </div>
       </div>
+      <AddComment />
+      <CommentList />
     </section>
   );
 };
