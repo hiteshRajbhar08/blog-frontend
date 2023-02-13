@@ -21,6 +21,28 @@ const loginUser = async (userData) => {
   return response.data;
 };
 
+// register user
+const registerUser = async (userData) => {
+  const config = {
+    headers: {
+      'Content-Type': 'application/json',
+    },
+  };
+
+  const response = await axios.post(
+    `${AUTH_API_URL}/register`,
+    userData,
+    config
+  );
+
+  if (response.data) {
+    localStorage.setItem('user', JSON.stringify(response.data));
+  }
+  toast.success('Register Successfull');
+
+  return response.data;
+};
+
 //Logout user
 const logoutUser = () => {
   localStorage.removeItem('user');
@@ -29,6 +51,7 @@ const logoutUser = () => {
 
 const authService = {
   loginUser,
+  registerUser,
   logoutUser,
 };
 

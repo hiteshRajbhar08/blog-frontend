@@ -3,7 +3,7 @@ import { toast } from 'react-toastify';
 import { Link, useNavigate } from 'react-router-dom';
 import './form.css';
 import { useDispatch, useSelector } from 'react-redux';
-import { reset } from '../../redux/features/auth/authSlice';
+import { registerUser, reset } from '../../redux/features/auth/authSlice';
 import Loader from '../../components/Loader/Loader';
 
 const RegisterPage = () => {
@@ -33,7 +33,8 @@ const RegisterPage = () => {
     if (email.trim() === '') return toast.error('Email is required');
     if (password.trim() === '') return toast.error('Password is required');
 
-    console.log({ username, email, password });
+    const userData = { username, email, password };
+    dispatch(registerUser(userData));
   };
 
   if (loading) {
