@@ -9,6 +9,7 @@ import RegisterPage from './pages/forms/RegisterPage';
 import HomePage from './pages/home/HomePage';
 import PostPage from './pages/post/PostPage';
 import PostDetailsPage from './pages/postDetails/PostDetailsPage';
+import ProfilePage from './pages/profile/ProfilePage';
 import Toast from './utils/Toast';
 
 const App = () => {
@@ -19,6 +20,7 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/profile/:id" element={<ProfilePage />} />
 
         <Route path="posts">
           <Route index element={<PostPage />} />
