@@ -1,15 +1,14 @@
 import { useState } from 'react';
 import './updateProfile.css';
+import { useDispatch } from 'react-redux';
+import { updateUserProfile } from '../../redux/actions/profileAction';
 
-const user = {
-  username: 'Youssef',
-  bio: 'hello my name is youssef',
-};
-
-const UpdateProfileModal = ({ setUpdateProfile }) => {
-  const [username, setUsername] = useState(user.username);
-  const [bio, setBio] = useState(user.bio);
+const UpdateProfileModal = ({ setUpdateProfile, profile }) => {
+  const [username, setUsername] = useState(profile?.username);
+  const [bio, setBio] = useState(profile?.bio);
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
 
   // From Submit Handler
   const formSubmitHandler = (e) => {
@@ -20,7 +19,8 @@ const UpdateProfileModal = ({ setUpdateProfile }) => {
       updatedUser.password = password;
     }
 
-    console.log(updatedUser);
+    dispatch(updateUserProfile(profile?._id, updatedUser));
+    setUpdateProfile(false);
   };
 
   return (

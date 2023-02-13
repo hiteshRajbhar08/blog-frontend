@@ -19,6 +19,10 @@ const profileSlice = createSlice({
       state.profile.profilePhoto = action.payload;
       state.loading = false;
     },
+    updateProfile: (state, action) => {
+      state.profile = action.payload;
+      state.loading = false;
+    },
     setError: (state, action) => {
       state.error = action.payload;
       state.loading = false;

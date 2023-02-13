@@ -65,3 +65,43 @@ export const uploadUserProfilePhoto =
       toast.error(error.response.data.message);
     }
   };
+
+//  update user profile
+export const updateUserProfile =
+  (userId, profile) => async (dispatch, getState) => {
+    try {
+      dispatch(profileActions.setLoading());
+
+      const config = {
+        headers: {
+          'Content-Type': 'application/json',
+          Authorization: `Bearer ${getState().auth.user.token}`,
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/users/profile/${userId}`,
+        profile,
+        config
+      );
+
+      dispatch(profileActions.updateProfile(data));
+      dispatch(authActions.setUsername(data.username));
+
+      // modify localstrorage
+      const user = JSON.parse(localStorage.getItem('userInfo'));
+      user.username = data?.username;
+      localStorage.setItem('userInfo', JSON.stringify(user));
+    } catch (error) {
+      dispatch(
+        profileActions.setError(
+          error.response && error.response.data
+            ? error.response.data
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+      toast.error(error.response.data.message);
+    }
+  };

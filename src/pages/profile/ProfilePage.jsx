@@ -111,7 +111,10 @@ const ProfilePage = () => {
         Delete Your Account
       </button>
       {updateProfile && (
-        <UpdateProfileModal setUpdateProfile={setUpdateProfile} />
+        <UpdateProfileModal
+          profile={profile}
+          setUpdateProfile={setUpdateProfile}
+        />
       )}
     </section>
   );
