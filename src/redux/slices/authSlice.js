@@ -30,6 +30,9 @@ const authSlice = createSlice({
       state.error = action.payload;
       state.loading = false;
     },
+    setUserPhoto: (state, action) => {
+      state.user.profilePhoto = action.payload;
+    },
   },
 });
 

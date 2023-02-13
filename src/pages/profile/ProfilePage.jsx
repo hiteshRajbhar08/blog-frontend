@@ -7,7 +7,10 @@ import { posts } from '../../dummyData';
 import UpdateProfileModal from './UpdateProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import { getUserProfile } from '../../redux/actions/profileAction';
+import {
+  getUserProfile,
+  uploadUserProfilePhoto,
+} from '../../redux/actions/profileAction';
 import Loader from '../../components/Loader/Loader';
 
 const ProfilePage = () => {
@@ -31,6 +34,8 @@ const ProfilePage = () => {
 
     const formData = new FormData();
     formData.append('image', file);
+
+    dispatch(uploadUserProfilePhoto(formData));
   };
 
   // Delete Account Handler

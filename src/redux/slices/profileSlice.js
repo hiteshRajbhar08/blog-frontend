@@ -5,6 +5,7 @@ const profileSlice = createSlice({
   initialState: {
     profile: null,
     loading: false,
+    error: null,
   },
   reducers: {
     setLoading: (state, action) => {
@@ -12,6 +13,14 @@ const profileSlice = createSlice({
     },
     setProfile: (state, action) => {
       state.profile = action.payload;
+      state.loading = false;
+    },
+    setProfilePhoto: (state, action) => {
+      state.profile.profilePhoto = action.payload;
+      state.loading = false;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
       state.loading = false;
     },
   },

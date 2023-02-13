@@ -19,9 +19,16 @@ export const loginUser = (user) => async (dispatch) => {
     toast.success('Login Successfull');
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
-    dispatch(authActions.setError());
+    dispatch(
+      authActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
     toast.error(error.response.data.message);
-    return error.response.data.message;
   }
 };
 
@@ -42,8 +49,14 @@ export const registerUser = (user) => async (dispatch) => {
     toast.success('Register Successfull');
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    authActions.setError(
+      error.response && error.response.data
+        ? error.response.data
+        : error.message
+        ? error.message
+        : 'An unexpected error has occured. Please try again later.'
+    );
     toast.error(error.response.data.message);
-    return error.response.data.message;
   }
 };
 
