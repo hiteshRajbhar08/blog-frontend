@@ -13,6 +13,7 @@ import LoginPage from './pages/forms/LoginPage';
 import RegisterPage from './pages/forms/RegisterPage';
 import ResetPasswordPage from './pages/forms/ResetPasswordPage';
 import HomePage from './pages/home/HomePage';
+import NotFoundPage from './pages/notFound/NotFoundPage';
 import PostPage from './pages/post/PostPage';
 import PostDetailsPage from './pages/postDetails/PostDetailsPage';
 import ProfilePage from './pages/profile/ProfilePage';
@@ -44,6 +45,8 @@ const App = () => {
           <Route path="comments-table" element={<CommentsTable />} />
           <Route path="categories-table" element={<CategoriesTable />} />
         </Route>
+
+        <Route path="*" element={<NotFoundPage />} />
       </Routes>
       <Footer />
       <Toast />
