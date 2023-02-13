@@ -1,10 +1,28 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { toast } from 'react-toastify';
+import { useDispatch, useSelector } from 'react-redux';
+import { loginUser, reset } from '../../redux/features/auth/authSlice';
+import Loader from '../../components/Loader/Loader';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loading, error, user } = useSelector((state) => state.auth);
+
+  useEffect(() => {
+    if (error) {
+      dispatch(reset());
+    }
+
+    if (user) {
+      navigate('/');
+    }
+  });
 
   // From Submit Handler
   const formSubmitHandler = (e) => {
@@ -12,8 +30,13 @@ const LoginPage = () => {
     if (email.trim() === '') return toast.error('Email is required');
     if (password.trim() === '') return toast.error('Password is required');
 
-    console.log({ email, password });
+    const userData = { email, password };
+    dispatch(loginUser(userData));
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <section className="form-container">
