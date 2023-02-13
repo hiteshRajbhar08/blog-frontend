@@ -8,8 +8,10 @@ import PostsTable from './pages/admin/PostsTable';
 import UsersTable from './pages/admin/UsersTable';
 import CategoryPage from './pages/category/CategoryPage';
 import CreatePostPage from './pages/createPost/CreatePostPage';
+import ForgotPasswordPage from './pages/forms/ForgotPasswordPage';
 import LoginPage from './pages/forms/LoginPage';
 import RegisterPage from './pages/forms/RegisterPage';
+import ResetPasswordPage from './pages/forms/ResetPasswordPage';
 import HomePage from './pages/home/HomePage';
 import PostPage from './pages/post/PostPage';
 import PostDetailsPage from './pages/postDetails/PostDetailsPage';
@@ -24,6 +26,8 @@ const App = () => {
         <Route path="/" element={<HomePage />} />
         <Route path="/login" element={<LoginPage />} />
         <Route path="/register" element={<RegisterPage />} />
+        <Route path="/forgot-password" element={<ForgotPasswordPage />} />
+        <Route path="/reset-password" element={<ResetPasswordPage />} />
         <Route path="/profile/:id" element={<ProfilePage />} />
 
         <Route path="posts">
