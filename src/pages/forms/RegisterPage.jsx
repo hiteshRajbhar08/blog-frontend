@@ -2,8 +2,9 @@ import { useState } from 'react';
 import { toast } from 'react-toastify';
 import { Link } from 'react-router-dom';
 import './form.css';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { registerUser } from '../../redux/actions/authAction';
+import Loader from '../../components/Loader/Loader';
 
 const RegisterPage = () => {
   const [username, setUsername] = useState('');
@@ -11,6 +12,8 @@ const RegisterPage = () => {
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+
+  const { loading } = useSelector((state) => state.auth);
 
   // From Submit Handler
   const formSubmitHandler = (e) => {
@@ -21,6 +24,10 @@ const RegisterPage = () => {
 
     dispatch(registerUser({ username, email, password }));
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <section className="form-container">

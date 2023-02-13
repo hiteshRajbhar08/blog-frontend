@@ -7,6 +7,8 @@ import { posts } from '../../dummyData';
 import UpdateProfileModal from './UpdateProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
+import { getUserProfile } from '../../redux/actions/profileAction';
+import Loader from '../../components/Loader/Loader';
 
 const ProfilePage = () => {
   const [updateProfile, setUpdateProfile] = useState(false);
@@ -15,11 +17,12 @@ const ProfilePage = () => {
   const dispatch = useDispatch();
   const { id } = useParams();
 
-  const { profile, loading, error } = useSelector((state) => state.profile);
+  const { profile, loading } = useSelector((state) => state.profile);
 
   useEffect(() => {
+    dispatch(getUserProfile(id));
     window.scrollTo(0, 0);
-  }, []);
+  }, [id, dispatch]);
 
   // Form Submit Handler
   const formSubmitHandler = (e) => {
@@ -48,6 +51,10 @@ const ProfilePage = () => {
       }
     });
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <section className="profile">

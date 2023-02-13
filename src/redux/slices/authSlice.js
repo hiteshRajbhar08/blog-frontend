@@ -9,19 +9,26 @@ const authSlice = createSlice({
   initialState: {
     user: userInfoFromStorage,
     loading: false,
+    error: null,
   },
   reducers: {
     login: (state, action) => {
       state.user = action.payload;
+      state.loading = false;
     },
     logout: (state, action) => {
       state.user = null;
     },
     register: (state, action) => {
       state.user = action.payload;
+      state.loading = false;
     },
     setLoading: (state, action) => {
       state.loading = true;
+    },
+    setError: (state, action) => {
+      state.error = action.payload;
+      state.loading = false;
     },
   },
 });

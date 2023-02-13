@@ -1,14 +1,17 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { toast } from 'react-toastify';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { loginUser } from '../../redux/actions/authAction';
+import Loader from '../../components/Loader/Loader';
 
 const LoginPage = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
   const dispatch = useDispatch();
+
+  const { loading } = useSelector((state) => state.auth);
 
   // From Submit Handler
   const formSubmitHandler = (e) => {
@@ -18,6 +21,10 @@ const LoginPage = () => {
 
     dispatch(loginUser({ email, password }));
   };
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <section className="form-container">

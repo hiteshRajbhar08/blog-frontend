@@ -19,7 +19,9 @@ export const loginUser = (user) => async (dispatch) => {
     toast.success('Login Successfull');
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
+    dispatch(authActions.setError());
     toast.error(error.response.data.message);
+    return error.response.data.message;
   }
 };
 
@@ -41,6 +43,7 @@ export const registerUser = (user) => async (dispatch) => {
     localStorage.setItem('userInfo', JSON.stringify(data));
   } catch (error) {
     toast.error(error.response.data.message);
+    return error.response.data.message;
   }
 };
 
