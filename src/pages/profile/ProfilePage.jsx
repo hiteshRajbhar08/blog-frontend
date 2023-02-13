@@ -7,11 +7,6 @@ import { posts } from '../../dummyData';
 import UpdateProfileModal from './UpdateProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
 import { useParams } from 'react-router-dom';
-import {
-  getUserProfile,
-  reset,
-} from '../../redux/features/profile/profileSlice';
-import Loader from '../../components/Loader/Loader';
 
 const ProfilePage = () => {
   const [updateProfile, setUpdateProfile] = useState(false);
@@ -26,19 +21,13 @@ const ProfilePage = () => {
     window.scrollTo(0, 0);
   }, []);
 
-  useEffect(() => {
-    if (error) {
-      dispatch(reset());
-    }
-    dispatch(getUserProfile(id));
-  }, [dispatch, error, id]);
-
   // Form Submit Handler
   const formSubmitHandler = (e) => {
     e.preventDefault();
     if (!file) return toast.warning('there is no file!');
 
-    console.log('image uploaded');
+    const formData = new FormData();
+    formData.append('image', file);
   };
 
   // Delete Account Handler
@@ -59,10 +48,6 @@ const ProfilePage = () => {
       }
     });
   };
-
-  if (loading) {
-    return <Loader />;
-  }
 
   return (
     <section className="profile">

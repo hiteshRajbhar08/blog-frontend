@@ -1,7 +1,7 @@
 import { Link, useNavigate } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
-import { logoutUser } from '../../redux/features/auth/authSlice';
+import { logoutUser } from '../../redux/actions/authAction';
 
 const HeaderRight = () => {
   const [dropdown, setDropdown] = useState(false);
