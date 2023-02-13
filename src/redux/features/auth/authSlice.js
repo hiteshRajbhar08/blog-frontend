@@ -21,6 +21,21 @@ export const loginUser = createAsyncThunk(
   }
 );
 
+//Logout user
+export const logoutUser = createAsyncThunk(
+  'user/logout',
+  async (_, thunkAPI) => {
+    try {
+      return await authService.logoutUser();
+    } catch (error) {
+      const message =
+        error.response?.data?.message || error.message || error.toString();
+      toast.error(message);
+      return thunkAPI.rejectWithValue(message);
+    }
+  }
+);
+
 const authSlice = createSlice({
   name: 'auth',
   initialState: {
@@ -49,6 +64,9 @@ const authSlice = createSlice({
         state.loading = false;
         state.error = true;
         state.message = action.payload;
+        state.user = null;
+      })
+      .addCase(logoutUser.fulfilled, (state, action) => {
         state.user = null;
       });
   },

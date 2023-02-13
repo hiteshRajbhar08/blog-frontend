@@ -21,8 +21,15 @@ const loginUser = async (userData) => {
   return response.data;
 };
 
+//Logout user
+const logoutUser = () => {
+  localStorage.removeItem('user');
+  toast.success('Logout Successfull');
+};
+
 const authService = {
   loginUser,
+  logoutUser,
 };
 
 export default authService;

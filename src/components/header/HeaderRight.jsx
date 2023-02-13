@@ -1,11 +1,21 @@
-import { Link } from 'react-router-dom';
-import { useSelector } from 'react-redux';
+import { Link, useNavigate } from 'react-router-dom';
+import { useSelector, useDispatch } from 'react-redux';
 import { useState } from 'react';
+import { logoutUser } from '../../redux/features/auth/authSlice';
 
 const HeaderRight = () => {
   const [dropdown, setDropdown] = useState(false);
 
   const { user } = useSelector((state) => state.auth);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const logoutHandler = () => {
+    setDropdown(false);
+    dispatch(logoutUser());
+    navigate('/');
+  };
 
   return (
     <div className="header-right">
@@ -33,7 +43,7 @@ const HeaderRight = () => {
                   <i className="bi bi-file-person"></i>
                   <span>Profile</span>
                 </Link>
-                <div className="header-dropdown-item">
+                <div onClick={logoutHandler} className="header-dropdown-item">
                   <i className="bi bi-box-arrow-in-left"></i>
                   <span> Logout</span>
                 </div>

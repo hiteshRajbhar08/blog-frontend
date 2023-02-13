@@ -1,4 +1,9 @@
-import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
+import {
+  BrowserRouter as Router,
+  Routes,
+  Route,
+  Navigate,
+} from 'react-router-dom';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
@@ -18,8 +23,11 @@ import PostPage from './pages/post/PostPage';
 import PostDetailsPage from './pages/postDetails/PostDetailsPage';
 import ProfilePage from './pages/profile/ProfilePage';
 import Toast from './utils/Toast';
+import { useSelector } from 'react-redux';
 
 const App = () => {
+  const { user } = useSelector((state) => state.auth);
+
   return (
     <Router>
       <Header />
@@ -33,17 +41,37 @@ const App = () => {
 
         <Route path="posts">
           <Route index element={<PostPage />} />
-          <Route path="create-post" element={<CreatePostPage />} />
+          <Route
+            path="create-post"
+            element={user ? <CreatePostPage /> : <Navigate to="/" />}
+          />
           <Route path="details/:id" element={<PostDetailsPage />} />
           <Route path="categories/:category" element={<CategoryPage />} />
         </Route>
 
         <Route path="admin-dashboard">
-          <Route index element={<AdminDashboardPage />} />
-          <Route path="users-table" element={<UsersTable />} />
-          <Route path="posts-table" element={<PostsTable />} />
-          <Route path="comments-table" element={<CommentsTable />} />
-          <Route path="categories-table" element={<CategoriesTable />} />
+          <Route
+            index
+            element={
+              user?.isAdmin ? <AdminDashboardPage /> : <Navigate to="/" />
+            }
+          />
+          <Route
+            path="users-table"
+            element={user?.isAdmin ? <UsersTable /> : <Navigate to="/" />}
+          />
+          <Route
+            path="posts-table"
+            element={user?.isAdmin ? <PostsTable /> : <Navigate to="/" />}
+          />
+          <Route
+            path="comments-table"
+            element={user?.isAdmin ? <CommentsTable /> : <Navigate to="/" />}
+          />
+          <Route
+            path="categories-table"
+            element={user?.isAdmin ? <CategoriesTable /> : <Navigate to="/" />}
+          />
         </Route>
 
         <Route path="*" element={<NotFoundPage />} />
