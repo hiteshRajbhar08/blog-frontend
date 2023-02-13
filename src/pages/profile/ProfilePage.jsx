@@ -4,6 +4,7 @@ import { toast } from 'react-toastify';
 import swal from 'sweetalert';
 import PostList from '../../components/posts/PostList';
 import { posts } from '../../dummyData';
+import UpdateProfileModal from './UpdateProfileModal';
 
 const ProfilePage = () => {
   const [updateProfile, setUpdateProfile] = useState(false);
@@ -91,9 +92,9 @@ const ProfilePage = () => {
       <button onClick={deleteAccountHandler} className="delete-account-btn">
         Delete Your Account
       </button>
-      {/* {updateProfile && (
+      {updateProfile && (
         <UpdateProfileModal setUpdateProfile={setUpdateProfile} />
-      )} */}
+      )}
     </section>
   );
 };
