@@ -2,6 +2,10 @@ import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Footer from './components/footer/Footer';
 import Header from './components/header/Header';
 import AdminDashboardPage from './pages/admin/AdminDashboardPage';
+import CategoriesTable from './pages/admin/CategoriesTable';
+import CommentsTable from './pages/admin/CommentsTable';
+import PostsTable from './pages/admin/PostsTable';
+import UsersTable from './pages/admin/UsersTable';
 import CategoryPage from './pages/category/CategoryPage';
 import CreatePostPage from './pages/createPost/CreatePostPage';
 import LoginPage from './pages/forms/LoginPage';
@@ -29,7 +33,13 @@ const App = () => {
           <Route path="categories/:category" element={<CategoryPage />} />
         </Route>
 
-        <Route path="/admin-dashboard" element={<AdminDashboardPage />} />
+        <Route path="admin-dashboard">
+          <Route index element={<AdminDashboardPage />} />
+          <Route path="users-table" element={<UsersTable />} />
+          <Route path="posts-table" element={<PostsTable />} />
+          <Route path="comments-table" element={<CommentsTable />} />
+          <Route path="categories-table" element={<CategoriesTable />} />
+        </Route>
       </Routes>
       <Footer />
       <Toast />
