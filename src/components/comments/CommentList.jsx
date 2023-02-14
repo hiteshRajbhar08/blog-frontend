@@ -3,7 +3,7 @@ import swal from 'sweetalert';
 import UpdateCommentModal from './UpdateCommentModal';
 import { useState } from 'react';
 import Moment from 'react-moment';
-import { useDispatch, useSelector } from 'react-redux';
+import { useSelector } from 'react-redux';
 
 const CommentList = ({ comments }) => {
   const [updateComment, setUpdateComment] = useState(false);

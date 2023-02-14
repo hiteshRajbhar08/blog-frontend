@@ -1,11 +1,15 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import './updatePostModal.css';
+import { useDispatch } from 'react-redux';
+import { updatePost } from '../../redux/actions/postAction';
 
 const UpdatePostModal = ({ post, setUpdatePost }) => {
   const [title, setTitle] = useState(post.title);
   const [description, setDescription] = useState(post.description);
   const [category, setCategory] = useState(post.category);
+
+  const dispatch = useDispatch();
 
   const formSubmitHandler = (e) => {
     e.preventDefault();
@@ -15,7 +19,10 @@ const UpdatePostModal = ({ post, setUpdatePost }) => {
     if (description.trim() === '')
       return toast.error('Post Description is required');
 
-    console.log({ title, description, category });
+    const newPost = { title, category, description };
+
+    dispatch(updatePost(post?._id, newPost));
+    setUpdatePost(false);
   };
 
   return (

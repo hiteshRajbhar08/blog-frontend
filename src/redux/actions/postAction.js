@@ -146,3 +146,97 @@ export const toggleLikePost = (postId) => async (dispatch, getState) => {
     toast.error(error.response.data.message);
   }
 };
+
+//  update post image
+export const updatePostImage =
+  (postId, newImage) => async (dispatch, getState) => {
+    try {
+      dispatch(postActions.setLoading());
+
+      const config = {
+        headers: {
+          Authorization: `Bearer ${getState().auth.user.token}`,
+          'Content-Type': 'multipart/form-data',
+        },
+      };
+
+      const { data } = await axios.put(
+        `/api/posts/update-image/${postId}`,
+        newImage,
+        config
+      );
+
+      dispatch(postActions.setUploadImage(data));
+      toast.success('New Image Uploaded Successfully');
+    } catch (error) {
+      dispatch(
+        postActions.setError(
+          error.response && error.response.data
+            ? error.response.data
+            : error.message
+            ? error.message
+            : 'An unexpected error has occured. Please try again later.'
+        )
+      );
+      toast.error(error.response.data.message);
+    }
+  };
+
+//  update post
+export const updatePost = (postId, newPost) => async (dispatch, getState) => {
+  try {
+    dispatch(postActions.setLoading());
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+        'Content-Type': 'application/json',
+      },
+    };
+
+    const { data } = await axios.put(`/api/posts/${postId}`, newPost, config);
+
+    dispatch(postActions.setPost(data));
+    toast.success('Your Post Updated Successfully');
+  } catch (error) {
+    dispatch(
+      postActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
+
+//  delete post
+export const deletePost = (postId) => async (dispatch, getState) => {
+  try {
+    dispatch(postActions.setLoading());
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/posts/${postId}`, config);
+
+    dispatch(postActions.deletePost(data.postId));
+    toast.success(data.message);
+  } catch (error) {
+    dispatch(
+      postActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
