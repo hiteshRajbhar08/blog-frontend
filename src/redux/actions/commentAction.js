@@ -75,6 +75,33 @@ export const deleteComment = (commentId) => async (dispatch, getState) => {
     await axios.delete(`/api/comments/${commentId}`, config);
 
     dispatch(postActions.deleteCommentFromPost(commentId));
+    dispatch(commentActions.deleteComment(commentId));
+  } catch (error) {
+    dispatch(
+      commentActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
+
+// fetch all comment
+export const fetchAllComment = () => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/comments`, config);
+
+    dispatch(commentActions.setComments(data));
   } catch (error) {
     dispatch(
       commentActions.setError(

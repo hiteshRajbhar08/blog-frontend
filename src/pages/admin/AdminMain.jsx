@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { fetchCategories } from '../../redux/actions/categoryAction';
 import { getUsersCount } from '../../redux/actions/profileAction';
 import { getPostsCount } from '../../redux/actions/postAction';
+import { fetchAllComment } from '../../redux/actions/commentAction';
 
 const AdminMain = () => {
   const dispatch = useDispatch();
@@ -12,11 +13,13 @@ const AdminMain = () => {
   const { categories } = useSelector((state) => state.category);
   const { usersCount } = useSelector((state) => state.profile);
   const { postsCount } = useSelector((state) => state.post);
+  const { comments } = useSelector((state) => state.comment);
 
   useEffect(() => {
     dispatch(fetchCategories());
     dispatch(getUsersCount());
     dispatch(getPostsCount());
+    dispatch(fetchAllComment());
   }, [dispatch]);
 
   return (
@@ -63,7 +66,7 @@ const AdminMain = () => {
         </div>
         <div className="admin-main-card">
           <h5 className="admin-card-title">Comments</h5>
-          <div className="admin-card-count">44</div>
+          <div className="admin-card-count">{comments.length}</div>
           <div className="admin-card-link-wrapper">
             <Link
               to="/admin-dashboard/comments-table"
