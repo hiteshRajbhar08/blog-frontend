@@ -127,7 +127,13 @@ const PostDetailsPage = () => {
           </div>
         )}
       </div>
-      <AddComment />
+      {user ? (
+        <AddComment postId={post?._id} />
+      ) : (
+        <h1 className="post-details-info-write">
+          to write a comment you should login in first
+        </h1>
+      )}
       <CommentList comments={post?.comments} />
       {updatePost && (
         <UpdatePostModal post={post} setUpdatePost={setUpdatePost} />

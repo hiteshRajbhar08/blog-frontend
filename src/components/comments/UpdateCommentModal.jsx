@@ -1,9 +1,13 @@
 import { useState } from 'react';
 import { toast } from 'react-toastify';
 import './updateComment.css';
+import { useDispatch } from 'react-redux';
+import { updateComment } from '../../redux/actions/commentAction';
 
-const UpdateCommentModal = ({ setUpdateComment }) => {
-  const [text, setText] = useState('this is so great');
+const UpdateCommentModal = ({ setUpdateComment, commentForUpdate }) => {
+  const [text, setText] = useState(commentForUpdate?.text);
+
+  const dispatch = useDispatch();
 
   // From Submit Handler
   const formSubmitHandler = (e) => {
@@ -11,7 +15,8 @@ const UpdateCommentModal = ({ setUpdateComment }) => {
 
     if (text.trim() === '') return toast.error('text is required');
 
-    console.log({ text });
+    dispatch(updateComment(commentForUpdate?._id, { text }));
+    setUpdateComment(false);
   };
 
   return (
