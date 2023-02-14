@@ -1,10 +1,26 @@
 import { Link } from 'react-router-dom';
 import PostList from '../../components/posts/PostList';
 import Sidebar from '../../components/sidebar/Sidebar';
-import { posts, categories } from '../../dummyData';
+import { categories } from '../../dummyData';
 import './home.css';
+import { useDispatch, useSelector } from 'react-redux';
+import { useEffect } from 'react';
+import { fetchPosts } from '../../redux/actions/postAction';
+import Loader from '../../components/Loader/Loader';
 
 const HomePage = () => {
+  const dispatch = useDispatch();
+
+  const { posts, loading } = useSelector((state) => state.post);
+
+  useEffect(() => {
+    dispatch(fetchPosts(1));
+  }, [dispatch]);
+
+  if (loading) {
+    return <Loader />;
+  }
+
   return (
     <section className="home">
       <div className="home-hero-header">
@@ -14,7 +30,7 @@ const HomePage = () => {
       </div>
       <div className="home-latest-post">Latest Posts</div>
       <div className="home-container">
-        <PostList posts={posts.slice(0, 3)} />
+        <PostList posts={posts} />
         <Sidebar categories={categories} />
       </div>
       <div className="home-see-posts-link">
