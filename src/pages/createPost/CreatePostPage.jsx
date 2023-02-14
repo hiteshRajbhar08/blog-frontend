@@ -5,6 +5,7 @@ import { useSelector, useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
 import { createPost } from '../../redux/actions/postAction';
 import Loader from '../../components/Loader/Loader';
+import { fetchCategories } from '../../redux/actions/categoryAction';
 
 const CreatePostPage = () => {
   const [title, setTitle] = useState('');
@@ -16,6 +17,7 @@ const CreatePostPage = () => {
   const navigate = useNavigate();
 
   const { loading, isPostCreated } = useSelector((state) => state.post);
+  const { categories } = useSelector((state) => state.category);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -41,6 +43,10 @@ const CreatePostPage = () => {
     }
   }, [navigate, isPostCreated]);
 
+  useEffect(() => {
+    dispatch(fetchCategories());
+  }, [dispatch]);
+
   if (loading) {
     return <Loader />;
   }
@@ -64,8 +70,11 @@ const CreatePostPage = () => {
           <option disabled value="">
             Select A Category
           </option>
-          <option value="music">music</option>
-          <option value="travelling">travelling</option>
+          {categories?.map((category) => (
+            <option key={category?._id} value={category?.title}>
+              {category?.title}
+            </option>
+          ))}
         </select>
         <textarea
           className="create-post-textarea"
