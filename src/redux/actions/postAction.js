@@ -98,3 +98,51 @@ export const createPost = (newPost) => async (dispatch, getState) => {
     toast.error(error.response.data.message);
   }
 };
+
+//  fetch single post
+export const fetchSinglePost = (postId) => async (dispatch) => {
+  try {
+    dispatch(postActions.setLoading());
+
+    const { data } = await axios.get(`/api/posts/${postId}`);
+
+    dispatch(postActions.setPost(data));
+  } catch (error) {
+    dispatch(
+      postActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
+
+//  toggle like on post
+export const toggleLikePost = (postId) => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.put(`/api/posts/like/${postId}`, {}, config);
+
+    dispatch(postActions.setLike(data));
+  } catch (error) {
+    dispatch(
+      postActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};

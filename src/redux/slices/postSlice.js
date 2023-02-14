@@ -9,6 +9,7 @@ const postSlice = createSlice({
     postsCount: null,
     postCate: [],
     isPostCreated: false,
+    post: null,
   },
   reducers: {
     setLoading: (state, action) => {
@@ -16,6 +17,10 @@ const postSlice = createSlice({
     },
     setPosts: (state, action) => {
       state.posts = action.payload;
+      state.loading = false;
+    },
+    setPost: (state, action) => {
+      state.post = action.payload;
       state.loading = false;
     },
     setPostsCount: (state, action) => {
@@ -29,6 +34,9 @@ const postSlice = createSlice({
     setIsPostCreated: (state, action) => {
       state.isPostCreated = true;
       state.loading = false;
+    },
+    setLike: (state, action) => {
+      state.post.likes = action.payload.likes;
     },
     clearIsPostCreated: (state, action) => {
       state.isPostCreated = false;
