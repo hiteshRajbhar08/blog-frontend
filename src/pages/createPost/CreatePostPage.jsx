@@ -1,12 +1,21 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 import './createPost.css';
+import { useSelector, useDispatch } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { createPost } from '../../redux/actions/postAction';
+import Loader from '../../components/Loader/Loader';
 
 const CreatePostPage = () => {
   const [title, setTitle] = useState('');
   const [description, setDescription] = useState('');
   const [category, setCategory] = useState('');
   const [file, setFile] = useState(null);
+
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
+
+  const { loading, isPostCreated } = useSelector((state) => state.post);
 
   const submitHandler = (e) => {
     e.preventDefault();
@@ -23,8 +32,18 @@ const CreatePostPage = () => {
     formData.append('description', description);
     formData.append('category', category);
 
-    console.log({ title, category, description, file });
+    dispatch(createPost(formData));
   };
+
+  useEffect(() => {
+    if (isPostCreated) {
+      navigate('/');
+    }
+  }, [navigate, isPostCreated]);
+
+  if (loading) {
+    return <Loader />;
+  }
 
   return (
     <section className="create-post">

@@ -67,3 +67,34 @@ export const fetchPostBasedOnCategory = (category) => async (dispatch) => {
     toast.error(error.response.data.message);
   }
 };
+
+//  create post
+export const createPost = (newPost) => async (dispatch, getState) => {
+  try {
+    dispatch(postActions.setLoading());
+
+    const config = {
+      headers: {
+        'Content-Type': 'multipart/form-data',
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.post(`/api/posts`, newPost, config);
+
+    dispatch(postActions.setIsPostCreated(data));
+    toast.success('Post Created Successfully');
+    setTimeout(() => dispatch(postActions.clearIsPostCreated()), 2000);
+  } catch (error) {
+    dispatch(
+      postActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
