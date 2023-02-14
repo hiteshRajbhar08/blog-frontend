@@ -66,6 +66,7 @@ tr:hover {
   display: flex;
   align-items: center;
   justify-content: space-around;
+  margin-right: 5px;
 }
 
 .table-button-group button {
@@ -107,7 +108,7 @@ tr:hover {
 
   .table-button-group button {
     width: 100%;
-    margin: 10px 0;
+    margin: 10px 5px;
   }
 
   th,

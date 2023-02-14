@@ -24,6 +24,34 @@ export const fetchPosts = (pageNumber) => async (dispatch) => {
   }
 };
 
+//  fetch allposts (admin)
+export const fetchAllPosts = () => async (dispatch, getState) => {
+  try {
+    dispatch(postActions.setLoading());
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/posts`, config);
+
+    dispatch(postActions.setPosts(data));
+  } catch (error) {
+    dispatch(
+      postActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
+
 //  get post count
 export const getPostsCount = () => async (dispatch) => {
   try {
