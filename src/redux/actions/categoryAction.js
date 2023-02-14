@@ -24,7 +24,7 @@ export const fetchCategories = () => async (dispatch) => {
   }
 };
 
-// create new category
+// create new category (admin)
 export const createCategory = (newCategory) => async (dispatch, getState) => {
   try {
     const config = {
@@ -52,7 +52,7 @@ export const createCategory = (newCategory) => async (dispatch, getState) => {
   }
 };
 
-// delete category
+// delete category (admin)
 export const deleteCategory = (categoryId) => async (dispatch, getState) => {
   try {
     const config = {

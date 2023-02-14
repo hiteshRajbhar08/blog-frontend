@@ -135,3 +135,55 @@ export const deleteUserProfile = (userId) => async (dispatch, getState) => {
     toast.error(error.response.data.message);
   }
 };
+
+//  get users count (admin)
+export const getUsersCount = () => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/count`, config);
+
+    dispatch(profileActions.setUsersCount(data));
+  } catch (error) {
+    dispatch(
+      profileActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
+
+//  get all users profile (admin)
+export const getAllUsersProfile = () => async (dispatch, getState) => {
+  try {
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.get(`/api/users/profile`, config);
+
+    dispatch(profileActions.setProfiles(data));
+  } catch (error) {
+    dispatch(
+      profileActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};
