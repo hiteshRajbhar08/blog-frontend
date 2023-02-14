@@ -4,22 +4,27 @@ import { toast } from 'react-toastify';
 import swal from 'sweetalert';
 import UpdateProfileModal from './UpdateProfileModal';
 import { useDispatch, useSelector } from 'react-redux';
-import { useParams } from 'react-router-dom';
+import { useNavigate, useParams } from 'react-router-dom';
 import {
+  deleteUserProfile,
   getUserProfile,
   uploadUserProfilePhoto,
 } from '../../redux/actions/profileAction';
 import Loader from '../../components/Loader/Loader';
 import PostItem from '../../components/posts/PostItem';
+import { logoutUser } from '../../redux/actions/authAction';
 
 const ProfilePage = () => {
   const [updateProfile, setUpdateProfile] = useState(false);
   const [file, setFile] = useState(null);
 
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const { id } = useParams();
 
-  const { profile, loading } = useSelector((state) => state.profile);
+  const { profile, loading, isProfileDeleted } = useSelector(
+    (state) => state.profile
+  );
   const { user } = useSelector((state) => state.auth);
 
   useEffect(() => {
@@ -46,16 +51,19 @@ const ProfilePage = () => {
       icon: 'warning',
       buttons: true,
       dangerMode: true,
-    }).then((willDelete) => {
-      if (willDelete) {
-        swal('Account has been deleted!', {
-          icon: 'success',
-        });
-      } else {
-        swal('Something went wrong!');
+    }).then((isOk) => {
+      if (isOk) {
+        dispatch(deleteUserProfile(user?._id));
+        dispatch(logoutUser());
       }
     });
   };
+
+  useEffect(() => {
+    if (isProfileDeleted) {
+      navigate('/');
+    }
+  }, [isProfileDeleted, navigate]);
 
   if (loading) {
     return <Loader />;
@@ -109,7 +117,7 @@ const ProfilePage = () => {
       </div>
       <div className="profile-posts-list">
         <h2 className="profile-posts-list-title">{profile?.username} Posts</h2>
-        {profile?.posts.map((post) => (
+        {profile?.posts?.map((post) => (
           <PostItem
             key={post?._id}
             post={post}

@@ -105,3 +105,33 @@ export const updateUserProfile =
       toast.error(error.response.data.message);
     }
   };
+
+//  delete user profile
+export const deleteUserProfile = (userId) => async (dispatch, getState) => {
+  try {
+    dispatch(profileActions.setLoading());
+
+    const config = {
+      headers: {
+        Authorization: `Bearer ${getState().auth.user.token}`,
+      },
+    };
+
+    const { data } = await axios.delete(`/api/users/profile/${userId}`, config);
+
+    dispatch(profileActions.setIsProfileDeleted());
+    toast.success(data.message);
+    setTimeout(() => dispatch(profileActions.clearIsProfileDeleted()), 2000);
+  } catch (error) {
+    dispatch(
+      profileActions.setError(
+        error.response && error.response.data
+          ? error.response.data
+          : error.message
+          ? error.message
+          : 'An unexpected error has occured. Please try again later.'
+      )
+    );
+    toast.error(error.response.data.message);
+  }
+};

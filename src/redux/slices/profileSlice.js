@@ -6,6 +6,7 @@ const profileSlice = createSlice({
     profile: null,
     loading: false,
     error: null,
+    isProfileDeleted: false,
   },
   reducers: {
     setLoading: (state, action) => {
@@ -22,6 +23,13 @@ const profileSlice = createSlice({
     updateProfile: (state, action) => {
       state.profile = action.payload;
       state.loading = false;
+    },
+    setIsProfileDeleted: (state, action) => {
+      state.isProfileDeleted = true;
+      state.loading = false;
+    },
+    clearIsProfileDeleted: (state, action) => {
+      state.isProfileDeleted = false;
     },
     setError: (state, action) => {
       state.error = action.payload;
